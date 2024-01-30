@@ -1,4 +1,4 @@
-import { useDeferredValue, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   StyleSheet,
@@ -9,170 +9,185 @@ import {
   Modal,
   ScrollView,
 } from "react-native";
-import uuid from 'react-native-uuid';
-
+import uuid from "react-native-uuid";
 
 
 const App = () => {
-  const [modalVisible, setModalVisible] = useState(false)
-  const [idSelected , setIdSelected] = useState("")
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [idSelected, setIdSelected] = useState("");
 
   const [newTask, setNewTask] = useState({
     title: "",
     date: "",
     hour: "",
-    id:""
+    id: "",
   });
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState([]);
 
   const addTask = () => {
-     
     setTasks([...tasks, newTask]);
-  setNewTask({
+    setNewTask({
       title: "",
       date: "",
       hour: "",
-      id:""
-    })
-  }
+      id: "",
+    });
+  };
   const onHandlerTitle = (t) => {
-    const id = uuid.v4()
-    setNewTask({ ...newTask, title: t, id});
-  }
+    const id = uuid.v4();
+    setNewTask({ ...newTask, title: t, id });
+  };
   const onHandlerDate = (t) => {
-    setNewTask({ ...newTask, date:t });
-  }
+    setNewTask({ ...newTask, date: t });
+  };
   const onHandlerHour = (t) => {
-    setNewTask({ ...newTask, hour:t }); 
-  }
+    setNewTask({ ...newTask, hour: t });
+  };
 
   const onHandlerModalDelete = (id) => {
-    setIdSelected(id)
-    setModalVisible(true)
-  }
+    setIdSelected(id);
+    setModalVisible(true);
+  };
 
-  
   const deleteTask = () => {
-    setTasks(tasks.filter(task => task.id != idSelected ))
-  }
-
+    setTasks(tasks.filter((task) => task.id != idSelected));
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Pastillero virtual </Text>
-      <Text style={styles.text}>Ingresar datos:</Text>
+      <Text style={styles.texth1}>
+        Ingresar datos sobre los medicamentos a guardar en el pastillero:
+      </Text>
       <View style={styles.inputContainer}>
         <TextInput
           value={newTask.title}
           onChangeText={onHandlerTitle}
           placeholder="Medicamento"
-          
           style={styles.input}
         />
-        <TextInput 
+        <TextInput
           value={newTask.date}
           onChangeText={onHandlerDate}
           placeholder="Día de la semana"
-         
           style={styles.input}
         />
-        <TextInput 
-          value={newTask.hour} 
+        <TextInput
+          value={newTask.hour}
           onChangeText={onHandlerHour}
           placeholder="Horario"
-         
           style={styles.input}
         />
-        <Button title="Click" onPress={addTask} />
+        <Button style={styles.btn} title="GUARDAR" onPress={addTask} />
       </View>
-      <View style={styles.tasksContainer}>
-      <FlatList
-         data={tasks}
-         keyExtractor={item =>item.id}
-         renderItem={({item}) =>(
-                               <View style={styles.taskCard}>
-                                <Text style={styles.text}> {item.title} </Text>
-                                 <Button title="DEL" onPress={() => onHandlerModalDelete (item.id)} />
-                                </View>
-       )
-        }
-        />
-        <Modal animation="slide"
-          visible ={modalVisible}
-         >
-          <View style= {styles.modalMessage}>
-            <Text>¿Estás seguro que quieres eliminar la medicación?</Text>
-            <View style={styles.modalMessage}>
-              <Text style={styles.modalMessage}> {idSelected.value}</Text>
+      <ScrollView style={styles.tasksContainer}>
+        <FlatList
+          data={tasks}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.tasksCard}>
+              <Text style={styles.text}> {item.title} </Text>
+              <Text style={styles.text}>{item.date} </Text>
+              <Text style={styles.text}>{item.hour} </Text>
+              <Button
+                title="BORRAR"
+                onPress={() => onHandlerModalDelete(item.id)}
+              />
             </View>
-            <Button title="si" onPress={()=> {
-              deleteTask()
-              setModalVisible(false)
-              }}/>
-            <Button title='no' onPress={()=> setModalVisible(false)} />
-          </View>
-        </Modal>
-      </View>
+          )}
+        />
+      </ScrollView>
 
+      <Modal animation="slide" visible={modalVisible}>
+        <View style={styles.modalMessage}>
+          <Text style={styles.modalText}>
+            ¿Estás seguro que quieres borrar el medicamento {idSelected}?
+          </Text>
 
+          <Button
+            title="SI"
+            onPress={() => {
+              deleteTask();
+              setModalVisible(false);
+            }}
+          />
+          <Button title="NO" onPress={() => setModalVisible(false)} />
+        </View>
+      </Modal>
     </View>
   );
-      }
-export default App
+};
+export default App;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "edf6f9",
-    justifyContent: "center",
+    backgroundColor: "#ffd3da",
+    alignItems: "center",
     fontStyle: "italic",
     paddingTop: 10,
   },
   text: {
+    padding: 5,
+    margin: 5,
     fontSize: 20,
-    justifyContent: "center",
-    color: "black",
+    fontWeight: "bold",
+    alignItems: "center",
+    
+    color: "white",
     fontStyle: "normal",
+  },
+  texth1: {
+    padding: 10,
+    margin: 10,
+    fontSize: 20,
+    color: "#49708a",
+    fontWeight: "bold",
+    fontStyle: "italic",
   },
   input: {
     borderBottomWidth: 2,
     margin: 10,
     paddingVertical: 5,
-    paddingHorizontal: 5,
-    fontSize: 25,
+    paddingHorizontal: 10,
+    fontSize: 20,
     borderRadius: 5,
-    backgroundColor: "#caf0f8",
   },
   inputContainer: {
-    margin: 5,
-    alignItems: "center",
-  },
-  tasksContainer: {
-   padding:10,
-  
-  task: {
     borderWidth: 2,
-    margin: 10,
-    padding: 20,
-    backgroundColor: "#edf6f9",
+    margin:5,
+    borderRadius: 5,
+    padding:5,
+
+    backgroundColor: "#fec8a",
   },
-  taskCard: {
-    backgroundColor: "#ffddd2",
+  
+  tasksCard: {
+    backgroundColor: "#FEC89A",
     borderWidth: 2,
     padding: 10,
     margin: 10,
-    borderRadius: 10,
-    justifyContent: "space-between",
-    flexDirection: "row",
-  },
-  modalMessage:{
-    backgroundColor:"#caf0f8",
-    padding: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  }
- 
-}
-})
+    borderRadius: 2,
+     flexDirection : "column", 
+     alignItems : "flex-start",
+       },
+   tasksContainer :{
+     padding : 10,
+     marginTop: 10,
+     flexDirection: "row",
+     
+   },
 
+  modalMessage: {
+    backgroundColor: "#ffc6ff",
+    padding: 20,
+    margin: 20,
+    borderRadius: 2,
+    justifyContent: "center",
+  },
+  modalText: {
+    fontSize: 25,
+    padding: 5,
+    margin: 5,
+  },
+});
