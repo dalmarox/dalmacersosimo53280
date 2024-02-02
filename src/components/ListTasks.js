@@ -27,6 +27,11 @@ export default ListTasks;
 
 const styles = StyleSheet.create({
     tasksContainer:{
-        padding:10
+        padding: 5,
+        margin: 5,
+        width:"100%",
+        
+
+
       }
 })

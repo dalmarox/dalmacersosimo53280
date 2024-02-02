@@ -3,7 +3,8 @@ import ButtonPrimary from './ButtonPrimary'
 
 const CartTaskList = ({item,onHandlerModalDelete,screenWidth,updateTaskCompleted}) => {
   return (
-            <View style={[styles.tasksCard,{width:screenWidth -60,}]}>
+             
+                <View style={[styles.tasksCard,{width:screenWidth -60,}]}>
                 
                 <Text style={styles.text}>Titulo: {item.title}</Text>
                 <Text style={styles.text}>Día: {item.date}</Text>
@@ -22,17 +23,17 @@ export default CartTaskList
 const styles = StyleSheet.create ({
     
         tasksCard: {
-            backgroundColor: "#FEC89A",
+            backgroundColor: "#2CFF29",
             borderWidth: 2,
-            padding: 10,
-            margin: 10,
+            padding: 5,
+            margin: 5,
             borderRadius: 2,
              flexDirection : "column", 
              alignItems : "flex-start",
                },
          tasksContainer :{
-             padding : 10,
-             marginTop: 10,
+             padding : 20,
+             marginTop: 5,
              flexDirection: "row",
              
            },
@@ -41,12 +42,14 @@ const styles = StyleSheet.create ({
             flexDirection:"row",
             alignItems:"center",
             justifyContent:"flex-start",
-            gap:15  
+            gap:15,
+            
+          
            },
            text: {
             padding: 5,
             margin: 5,
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: "bold",
             alignItems: "center",
             

@@ -13,14 +13,18 @@ export default ButtonPrimary
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:"white",
+        backgroundColor:"#6290C3",
         width:"100%",
         paddingHorizontal:10,
         paddingVertical:5,
         alignItems:"center",
-        borderRadius:5
+        borderRadius: 5,
+        
+
+        
     },
     text:{
-        fontSize:16
+        fontSize:18,
+        color:"white",
     }
 })

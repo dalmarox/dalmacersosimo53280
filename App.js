@@ -107,7 +107,7 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffd3da",
+    backgroundColor: "white",
     alignItems: "center",
     fontStyle: "italic",
     paddingTop: 10,
@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
     color: "#49708a",
     fontWeight: "bold",
     fontStyle: "italic",
+    fontFamily:""
   },
   input: {
     borderBottomWidth: 2,
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 20,
     borderRadius: 5,
-    color: "#033F63",
+    color: "#2CFF29",
   },
   inputContainer: {
     borderWidth: 2,

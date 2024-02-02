@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View ,Modal,Button } from 'react-native'
+import { StyleSheet, Text, View ,Modal } from 'react-native'
+import ButtonPrimary from './ButtonPrimary'
 
 const ModalDeleteTasks = ({taskSelected,
                           deleteTask,
@@ -13,8 +14,8 @@ const ModalDeleteTasks = ({taskSelected,
         >
             <View style ={styles.modalMessage}>
             <Text style= {styles.modalText}>¿Está seguro que quiere eliminar el medicamento:{taskSelected.title}?</Text>
-            <Button title='si' onPress={deleteTask}/>
-            <Button title='no' onPress={()=> onHandlerModalDelete({})}/>
+            <ButtonPrimary  title='si' onPress={deleteTask}/>
+            <ButtonPrimary  title='no' onPress={()=> onHandlerModalDelete({})}/>
             </View>
         </Modal>
   )
@@ -24,17 +25,18 @@ export default ModalDeleteTasks
 
 const styles = StyleSheet.create({
     modalMessage: {
-        backgroundColor: "#ffc6ff",
+        backgroundColor: "#ff9500",
         padding: 20,
         margin: 20,
-        borderRadius: 2,
+        borderRadius: 10,
         justifyContent: "center",
+        flex:2,
+
       },
       modalText: {
-        fontSize: 25,
+        fontSize: 30,
         padding: 5,
         margin: 5,
       },
-
-
+ 
 })

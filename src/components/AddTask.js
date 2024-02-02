@@ -48,8 +48,7 @@ const AddTask = (
         placeholder="Ingresar cantidad a tomar:"
         placeholderTextColor="black"
         maxLength={25}
-        multiline
-        number Of Lines = {2}
+       
         style={styles.input}
       />
       <ButtonPrimary title="GUARDAR" onPress={addTask} />
@@ -62,14 +61,14 @@ export default AddTask;
 const styles = StyleSheet.create({
    
     input:{
-        width:"90%",
+        width:"100%",
         borderWidth:2,
         borderColor:"#30332E",
-        marginHorizontal:10,
+        marginHorizontal:5,
         marginVertical:5,
-        paddingVertical:10,
-        paddingHorizontal:10,
-        borderRadius:5,
+        paddingVertical:5,
+        paddingHorizontal:5,
+        
         color:"black",
         fontSize:20,
         textAlignVertical:"top"
@@ -78,15 +77,13 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     
-    width: "96%",
+    width: "100%",
     alignItems:"center",
     justifyContent:"space-around",
     borderWidth: 2,
-    margin: 10,
+    margin: 5,
     borderRadius: 5,
-    padding: 10,
-    borderColor: "#EC058E",
-
-    backgroundColor: "#fec8a",
+    padding: 5,
+    borderColor: "white",
   },
 });
