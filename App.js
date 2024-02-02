@@ -10,113 +10,101 @@ import {
   ScrollView,
 } from "react-native";
 import uuid from "react-native-uuid";
-
+import ModalDeleteTask from "./src/components/ModalDeleteTasks";
+import AddTask from './src/components/AddTask';
+import ListTasks from './src/components/ListTasks';
 
 const App = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [idSelected, setIdSelected] = useState("");
 
-  const [newTask, setNewTask] = useState({
-    title: "",
-    date: "",
-    hour: "",
-    id: "",
-  });
-  const [tasks, setTasks] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false)
+  const [taskSelected , setTaskSelected] = useState({})
+  const [taskTitle,setTaskTitle] = useState("")
+  const [taskDate,setTaskDate] = useState("")
+  const [taskHour,setTaskHour] = useState("")
+  const [taskAmount,setTaskAmount] = useState("")
+  const [tasks,setTasks] = useState([])
+  const screenWidth = Dimensions.get('window').width
 
-  const addTask = () => {
-    setTasks([...tasks, newTask]);
-    setNewTask({
-      title: "",
-      date: "",
-      hour: "",
-      id: "",
-    });
-  };
-  const onHandlerTitle = (t) => {
-    const id = uuid.v4();
-    setNewTask({ ...newTask, title: t, id });
-  };
+  const addTask = () =>{
+
+    const newTask = {
+      id: uuid.v4(),
+      title:taskTitle,
+      date:taskDate,
+      hour:taskHour,
+      amount:taskAmount
+
+    }
+
+    setTasks([...tasks,newTask])
+    setTaskTitle("")
+    setTaskDate("")
+    setTaskHour("")
+    setTaskAmount("")
+    Keyboard.dismiss()
+  }
+
+  const onHandlerTitle = (t) =>{
+    setTaskTitle(t)
+  }
+
   const onHandlerDate = (t) => {
-    setNewTask({ ...newTask, date: t });
-  };
-  const onHandlerHour = (t) => {
-    setNewTask({ ...newTask, hour: t });
-  };
+    setTaskDate(t)
+  }
+  const onHandlerHour = (t) =>{
+    setTaskHour(t)
+  }
 
-  const onHandlerModalDelete = (id) => {
-    setIdSelected(id);
-    setModalVisible(true);
-  };
+  const onHandlerAmount = (t) => {
+    setTaskAmount(t)
+  }
+  const onHandlerModalDelete = (task) => {
+    setTaskSelected(task)
+    setModalVisible(!modalVisible)
+  }
 
   const deleteTask = () => {
-    setTasks(tasks.filter((task) => task.id != idSelected));
-  };
+    setTasks(tasks.filter(task => task.id != taskSelected.id ))
+    setModalVisible(!modalVisible)
+  }
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Pastillero virtual </Text>
-      <Text style={styles.texth1}>
-        Ingresar datos sobre los medicamentos a guardar en el pastillero:
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          value={newTask.title}
-          onChangeText={onHandlerTitle}
-          placeholder="Medicamento"
-          style={styles.input}
-        />
-        <TextInput
-          value={newTask.date}
-          onChangeText={onHandlerDate}
-          placeholder="Día de la semana"
-          style={styles.input}
-        />
-        <TextInput
-          value={newTask.hour}
-          onChangeText={onHandlerHour}
-          placeholder="Horario"
-          style={styles.input}
-        />
-        <Button style={styles.btn} title="GUARDAR" onPress={addTask} />
-      </View>
-      <ScrollView style={styles.tasksContainer}>
-        <FlatList
-          data={tasks}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.tasksCard}>
-              <Text style={styles.text}> {item.title} </Text>
-              <Text style={styles.text}>{item.date} </Text>
-              <Text style={styles.text}>{item.hour} </Text>
-              <Button
-                title="BORRAR"
-                onPress={() => onHandlerModalDelete(item.id)}
-              />
-            </View>
-          )}
-        />
-      </ScrollView>
+  const updateTaskCompleted = (id) => {
+    setTasks(tasks.map(task =>{
+      if(task.id === id) return {...task,...{completed:!task.completed}}
+      return task
+    }))
+  }
 
-      <Modal animation="slide" visible={modalVisible}>
-        <View style={styles.modalMessage}>
-          <Text style={styles.modalText}>
-            ¿Estás seguro que quieres borrar el medicamento {idSelected}?
-          </Text>
+  return( 
+    <View style={styles.container} >
+      <Text style ={styles.text}>Pastillero Virtual</Text>
+      <Text style ={styles.texth1}> Ingresar datos sobre los medicamentos a guardar en el pastillero:</Text>
+      <AddTask taskTitle= {taskTitle}
+               onHandlerTitle= {onHandlerTitle}
+               taskDate = {taskDate}
+               onHandlerDate = {onHandlerDate}
+               taskHour= {taskHour}
+               onHandlerHour= {onHandlerHour}
+               taskAmount= {taskAmount}
+               onHandlerAmount ={onHandlerAmount}
 
-          <Button
-            title="SI"
-            onPress={() => {
-              deleteTask();
-              setModalVisible(false);
-            }}
-          />
-          <Button title="NO" onPress={() => setModalVisible(false)} />
-        </View>
-      </Modal>
-    </View>
-  );
-};
+               addTask = {addTask}
+      />
+      <ListTasks 
+        tasks={tasks} 
+        onHandlerModalDelete={onHandlerModalDelete}
+        screenWidth={screenWidth}
+        updateTaskCompleted={updateTaskCompleted}
+      />
+      <ModalDeleteTask  
+         modalVisible={modalVisible}
+         taskSelected={taskSelected}
+         deleteTask={deleteTask}
+         onHandlerModalDelete={onHandlerModalDelete}
+      />
+  </View>
+  )
+}
 export default App;
 
 const styles = StyleSheet.create({
@@ -162,32 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fec8a",
   },
   
-  tasksCard: {
-    backgroundColor: "#FEC89A",
-    borderWidth: 2,
-    padding: 10,
-    margin: 10,
-    borderRadius: 2,
-     flexDirection : "column", 
-     alignItems : "flex-start",
-       },
-   tasksContainer :{
-     padding : 10,
-     marginTop: 10,
-     flexDirection: "row",
-     
-   },
+  
 
-  modalMessage: {
-    backgroundColor: "#ffc6ff",
-    padding: 20,
-    margin: 20,
-    borderRadius: 2,
-    justifyContent: "center",
-  },
-  modalText: {
-    fontSize: 25,
-    padding: 5,
-    margin: 5,
-  },
+  
 });
