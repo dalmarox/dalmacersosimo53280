@@ -1,13 +1,10 @@
 import { useState } from "react";
 import {
-  Button,
   StyleSheet,
   Text,
-  TextInput,
+  Dimensions,
   View,
-  FlatList,
-  Modal,
-  ScrollView,
+Keyboard
 } from "react-native";
 import uuid from "react-native-uuid";
 import ModalDeleteTask from "./src/components/ModalDeleteTasks";
@@ -122,7 +119,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignItems: "center",
     
-    color: "white",
+    color: "#033F63",
     fontStyle: "normal",
   },
   texth1: {
@@ -140,6 +137,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 20,
     borderRadius: 5,
+    color: "#033F63",
   },
   inputContainer: {
     borderWidth: 2,

@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View,Switch} from 'react-native'
-import React from 'react'
 import ButtonPrimary from './ButtonPrimary'
 
 const CartTaskList = ({item,onHandlerModalDelete,screenWidth,updateTaskCompleted}) => {
@@ -11,11 +10,8 @@ const CartTaskList = ({item,onHandlerModalDelete,screenWidth,updateTaskCompleted
                 <Text style={styles.text}>Horario: {item.hour}</Text>
                 <Text style={styles.text}>Cantidad: {item.amount}</Text>
                 <View style={styles.completedContainer}>
-                    <Switch
-                        value={item.completed}
-                        onValueChange={() => updateTaskCompleted(item.id)}
-                    />
-                    <Text style={styles.textCompleted}>{item.completed ? "Completada" : "Pendiente" }</Text>
+                   
+                  
                 </View>
                 <ButtonPrimary title='ELIMINAR' onPress={() => onHandlerModalDelete(item)} />
             </View>
@@ -41,7 +37,11 @@ const styles = StyleSheet.create ({
              
            },
            completedContainer:{
-
+            width:"100%",
+            flexDirection:"row",
+            alignItems:"center",
+            justifyContent:"flex-start",
+            gap:15  
            },
            text: {
             padding: 5,
@@ -53,4 +53,9 @@ const styles = StyleSheet.create ({
             color: "white",
             fontStyle: "normal",
           },
+          textContainer: {
+            color:"white",
+            fontSize:16,
+            fontWeight:"bold"
+          }
     })

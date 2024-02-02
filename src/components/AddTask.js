@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View} from "react-native";
 import ButtonPrimary from './ButtonPrimary'
 
 const AddTask = (
@@ -18,6 +18,8 @@ const AddTask = (
         value={taskTitle}
         onChangeText={onHandlerTitle}
         placeholder="Medicamento:"
+        placeholderTextColor="black"
+        maxLength={25}
         
         
         style={styles.input}
@@ -26,14 +28,16 @@ const AddTask = (
         value={taskDate}
         onChangeText={onHandlerDate}
         placeholder="Día:"
-        
+        placeholderTextColor="black"
+        maxLength={25}
         style={styles.input}
       />
       <TextInput
         value={taskHour}
         onChangeText={onHandlerHour}
         placeholder="Horario:"
-    
+        placeholderTextColor="black"
+        maxLength={25}
 
     
         style={styles.input}
@@ -42,7 +46,10 @@ const AddTask = (
         value={taskAmount}
         onChangeText={onHandlerAmount}
         placeholder="Ingresar cantidad a tomar:"
-    
+        placeholderTextColor="black"
+        maxLength={25}
+        multiline
+        number Of Lines = {2}
         style={styles.input}
       />
       <ButtonPrimary title="GUARDAR" onPress={addTask} />
@@ -60,16 +67,17 @@ const styles = StyleSheet.create({
         borderColor:"#30332E",
         marginHorizontal:10,
         marginVertical:5,
-        paddingVertical:5,
+        paddingVertical:10,
         paddingHorizontal:10,
         borderRadius:5,
         color:"black",
-        fontSize:16,
+        fontSize:20,
         textAlignVertical:"top"
         
       },
 
   inputContainer: {
+    
     width: "96%",
     alignItems:"center",
     justifyContent:"space-around",

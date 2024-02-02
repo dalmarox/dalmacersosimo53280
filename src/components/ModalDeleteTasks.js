@@ -20,7 +20,7 @@ const ModalDeleteTasks = ({taskSelected,
   )
 }
 
-export default ModalDeleteTask
+export default ModalDeleteTasks
 
 const styles = StyleSheet.create({
     modalMessage: {

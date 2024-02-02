@@ -7,8 +7,8 @@ const ListTasks = ({tasks,onHandlerModalDelete,screenWidth,updateTaskCompleted})
   return (
     <View style={styles.tasksContainer}>
         <FlatList
-       // horizontal={true}
-        //pagingEnabled={true}
+        horizontal={true}
+        pagingEnabled={true}
         data={tasks}
         keyExtractor={item => item.id}
         renderItem={({item})=>(<CartTaskList 
@@ -23,7 +23,8 @@ const ListTasks = ({tasks,onHandlerModalDelete,screenWidth,updateTaskCompleted})
   )
 }
 
-export default ListTasks
+export default ListTasks;
+
 const styles = StyleSheet.create({
     tasksContainer:{
         padding:10
