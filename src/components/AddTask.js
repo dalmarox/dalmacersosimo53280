@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput, View} from "react-native";
 import ButtonPrimary from './ButtonPrimary'
-
+import colors from "../utils/globals/colors";
 const AddTask = (
   {taskTitle,
   onHandlerTitle,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     input:{
         width:"100%",
         borderWidth:2,
-        borderColor:"#30332E",
+        borderColor:colors.bordercolor,
         marginHorizontal:5,
         marginVertical:5,
         paddingVertical:5,

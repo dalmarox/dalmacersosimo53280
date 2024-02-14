@@ -10,7 +10,12 @@ import uuid from "react-native-uuid";
 import ModalDeleteTask from "./src/components/ModalDeleteTasks";
 import AddTask from './src/components/AddTask';
 import ListTasks from './src/components/ListTasks';
+import Header from './src/components/Header';
+import colors from'./src/utils/globals/colors'
+import {useFonts} from'expo-font'
+import {fontsCollection} from "./src/utils/globals/fonts"
 
+ 
 const App = () => {
 
   const [modalVisible, setModalVisible] = useState(false)
@@ -21,7 +26,12 @@ const App = () => {
   const [taskAmount,setTaskAmount] = useState("")
   const [tasks,setTasks] = useState([])
   const screenWidth = Dimensions.get('window').width
+  const [fontsLoaded] = useFonts(fontsCollection)
+ 
 
+  if (!fontsLoaded) {
+    return null;
+  }
   const addTask = () =>{
 
     const newTask = {
@@ -74,7 +84,9 @@ const App = () => {
 
   return( 
     <View style={styles.container} >
-      <Text style ={styles.text}>Pastillero Virtual</Text>
+      
+      {/*<Text style ={styles.text}>Pastillero Virtual</Text>*/}
+      <Header/>
       <Text style ={styles.texth1}> Ingresar datos sobre los medicamentos a guardar en el pastillero:</Text>
       <AddTask taskTitle= {taskTitle}
                onHandlerTitle= {onHandlerTitle}
@@ -99,6 +111,7 @@ const App = () => {
          deleteTask={deleteTask}
          onHandlerModalDelete={onHandlerModalDelete}
       />
+      
   </View>
   )
 }
@@ -107,7 +120,7 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: colors.primary,
     alignItems: "center",
     fontStyle: "italic",
     paddingTop: 10,
@@ -119,14 +132,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignItems: "center",
     
-    color: "#033F63",
+    color: colors.text,
     fontStyle: "normal",
   },
   texth1: {
     padding: 10,
     margin: 10,
     fontSize: 20,
-    color: "#49708a",
+    color: colors.texth1,
     fontWeight: "bold",
     fontStyle: "italic",
     fontFamily:""
@@ -138,7 +151,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 20,
     borderRadius: 5,
-    color: "#2CFF29",
+    color: colors.input,
   },
   inputContainer: {
     borderWidth: 2,
@@ -146,7 +159,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding:5,
 
-    backgroundColor: "#fec8a",
+    backgroundColor: colors.inputcontainer
   },
   
   

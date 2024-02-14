@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View,Switch} from 'react-native'
 import ButtonPrimary from './ButtonPrimary'
+import colors from '../utils/globals/colors'
 
 const CartTaskList = ({item,onHandlerModalDelete,screenWidth,updateTaskCompleted}) => {
   return (
@@ -23,7 +24,7 @@ export default CartTaskList
 const styles = StyleSheet.create ({
     
         tasksCard: {
-            backgroundColor: "#2CFF29",
+            backgroundColor: colors.third,
             borderWidth: 2,
             padding: 5,
             margin: 5,
@@ -53,11 +54,11 @@ const styles = StyleSheet.create ({
             fontWeight: "bold",
             alignItems: "center",
             
-            color: "white",
+            color: colors.primary,
             fontStyle: "normal",
           },
           textContainer: {
-            color:"white",
+            color:colors.primary,
             fontSize:16,
             fontWeight:"bold"
           }
