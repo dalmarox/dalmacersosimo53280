@@ -1,6 +1,7 @@
 import { StyleSheet, TextInput, View} from "react-native";
 import ButtonPrimary from './ButtonPrimary'
 import colors from "../utils/globals/colors";
+
 const AddTask = (
   {taskTitle,
   onHandlerTitle,
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         borderWidth:2,
         borderColor:colors.bordercolor,
         marginHorizontal:5,
-        marginVertical:5,
+        marginVertical:"auto",
         paddingVertical:5,
         paddingHorizontal:5,
         

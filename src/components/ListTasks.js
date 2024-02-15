@@ -2,10 +2,14 @@ import { StyleSheet, Text, View,FlatList,Button } from 'react-native'
 import React from 'react'
 import CartTaskList from './CartTaskList'
 
-const ListTasks = ({tasks,onHandlerModalDelete,screenWidth,updateTaskCompleted}) => {
-
+const ListTasks = ({tasks,onHandlerModalDelete,screenWidth,updateTaskCompleted,handlerTaskUpdate}) => {
+    
   return (
+
     <View style={styles.tasksContainer}>
+      {tasks.length === 0 ?
+      <View><Text>"Pastillero Vacio"</Text></View>
+      :
         <FlatList
         horizontal={true}
         pagingEnabled={true}
@@ -16,9 +20,10 @@ const ListTasks = ({tasks,onHandlerModalDelete,screenWidth,updateTaskCompleted})
                                     onHandlerModalDelete={onHandlerModalDelete}
                                     screenWidth={screenWidth}
                                     updateTaskCompleted={updateTaskCompleted}
+                                    handlerTaskUpdate={handlerTaskUpdate}
                                     />)}
         />
-  
+        }
     </View>
   )
 }
@@ -29,7 +34,11 @@ const styles = StyleSheet.create({
     tasksContainer:{
         padding: 5,
         margin: 5,
-        width:"100%",
+        
+        
+    
+        
+        
         
 
 

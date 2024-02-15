@@ -4,117 +4,142 @@ import {
   Text,
   Dimensions,
   View,
-Keyboard
+  Keyboard,
+  SafeAreaView,
+  StatusBar,
 } from "react-native";
+
 import uuid from "react-native-uuid";
-import ModalDeleteTask from "./src/components/ModalDeleteTasks";
-import AddTask from './src/components/AddTask';
-import ListTasks from './src/components/ListTasks';
-import Header from './src/components/Header';
-import colors from'./src/utils/globals/colors'
-import {useFonts} from'expo-font'
-import {fontsCollection} from "./src/utils/globals/fonts"
 
- 
+
+import colors from "./src/utils/globals/colors";
+import { useFonts } from "expo-font";
+import { fontsCollection } from "./src/utils/globals/fonts";
+import Home from "./src/screens/Home";
+import Update from './src/screens/Update'
+import Header from "./src/components/Header"
+
 const App = () => {
-
-  const [modalVisible, setModalVisible] = useState(false)
-  const [taskSelected , setTaskSelected] = useState({})
-  const [taskTitle,setTaskTitle] = useState("")
-  const [taskDate,setTaskDate] = useState("")
-  const [taskHour,setTaskHour] = useState("")
-  const [taskAmount,setTaskAmount] = useState("")
-  const [tasks,setTasks] = useState([])
-  const screenWidth = Dimensions.get('window').width
-  const [fontsLoaded] = useFonts(fontsCollection)
- 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [taskSelected, setTaskSelected] = useState({});
+  const [taskTitle, setTaskTitle] = useState("");
+  const [taskDate, setTaskDate] = useState("");
+  const [taskHour, setTaskHour] = useState("");
+  const [taskAmount, setTaskAmount] = useState("");
+  const [tasks, setTasks] = useState([]);
+  const [taskUpdate, setTaskUpdate] = useState({});
+  const screenWidth = Dimensions.get("window").width;
+  const [fontsLoaded] = useFonts(fontsCollection);
+  const [title,setTitle]=useState("")
 
   if (!fontsLoaded) {
     return null;
   }
-  const addTask = () =>{
-
+  const addTask = () => {
     const newTask = {
       id: uuid.v4(),
-      title:taskTitle,
-      date:taskDate,
-      hour:taskHour,
-      amount:taskAmount
+      title: taskTitle,
+      date: taskDate,
+      hour: taskHour,
+      amount: taskAmount,
+    };
 
+    setTasks([...tasks, newTask]);
+    setTaskTitle("");
+    setTaskDate("");
+    setTaskHour("");
+    setTaskAmount("");
+    Keyboard.dismiss();
+    
+    
+  };
+  const updateTask = (taskSelected) => {
+    setTasks(
+      tasks.map(task => {
+        if (task.id === taskSelected.id) {
+          return task
+        }
+      })
+    )
+    const goBack =() => {
+      setTaskUpdate({})
     }
-
-    setTasks([...tasks,newTask])
-    setTaskTitle("")
-    setTaskDate("")
-    setTaskHour("")
-    setTaskAmount("")
-    Keyboard.dismiss()
   }
-
-  const onHandlerTitle = (t) =>{
-    setTaskTitle(t)
+  const onHandlerTitle = (t) => {
+    setTaskTitle(t);
   }
 
   const onHandlerDate = (t) => {
-    setTaskDate(t)
-  }
-  const onHandlerHour = (t) =>{
-    setTaskHour(t)
-  }
+    setTaskDate(t);
+  };
+  const onHandlerHour = (t) => {
+    setTaskHour(t);
+  };
 
   const onHandlerAmount = (t) => {
-    setTaskAmount(t)
-  }
+    setTaskAmount(t);
+  };
   const onHandlerModalDelete = (task) => {
-    setTaskSelected(task)
-    setModalVisible(!modalVisible)
-  }
+    setTaskSelected(task);
+    setModalVisible(!modalVisible);
+  };
+  const handlerTaskUpdate = (task) => {
+    setTaskUpdate(task);
+  };
 
   const deleteTask = () => {
-    setTasks(tasks.filter(task => task.id != taskSelected.id ))
-    setModalVisible(!modalVisible)
-  }
+    setTasks(tasks.filter((task) => task.id != taskSelected.id));
+    setModalVisible(!modalVisible);
+  };
 
   const updateTaskCompleted = (id) => {
-    setTasks(tasks.map(task =>{
-      if(task.id === id) return {...task,...{completed:!task.completed}}
-      return task
-    }))
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === id)
+          return { ...task, ...{completed:!task.completed} };
+        return task;
+      })
+    )
   }
-
-  return( 
-    <View style={styles.container} >
-      
-      {/*<Text style ={styles.text}>Pastillero Virtual</Text>*/}
+  
+  
+  return (
+    <>
+      <StatusBar backgroundColor={colors.secondary} style="ligth" />
       <Header/>
-      <Text style ={styles.texth1}> Ingresar datos sobre los medicamentos a guardar en el pastillero:</Text>
-      <AddTask taskTitle= {taskTitle}
-               onHandlerTitle= {onHandlerTitle}
-               taskDate = {taskDate}
-               onHandlerDate = {onHandlerDate}
-               taskHour= {taskHour}
-               onHandlerHour= {onHandlerHour}
-               taskAmount= {taskAmount}
-               onHandlerAmount ={onHandlerAmount}
-
-               addTask = {addTask}
-      />
-      <ListTasks 
-        tasks={tasks} 
-        onHandlerModalDelete={onHandlerModalDelete}
-        screenWidth={screenWidth}
-        updateTaskCompleted={updateTaskCompleted}
-      />
-      <ModalDeleteTask  
-         modalVisible={modalVisible}
-         taskSelected={taskSelected}
-         deleteTask={deleteTask}
-         onHandlerModalDelete={onHandlerModalDelete}
-      />
-      
-  </View>
-  )
+      <SafeAreaView style={styles.container}>
+        
+       {taskUpdate.title? 
+          <Update 
+          taskUpdate={taskUpdate} 
+          updateTask={updateTask}
+          goBack={goBack}
+          />
+        : 
+          <Home
+            tasks={tasks}
+            taskTitle={taskTitle}
+            onHandlerTitle={onHandlerTitle}
+            taskDate={taskDate}
+            onHandlerDate={onHandlerDate}
+            taskHour={taskHour}
+            onHandlerHour={onHandlerHour}
+            taskAmount={taskAmount}
+            onHandlerAmount={onHandlerAmount}
+            addTask={addTask}
+            onHandlerModalDelete={onHandlerModalDelete}
+            screenWidth={screenWidth}
+            updateTaskCompleted={updateTaskCompleted}
+            handlerTaskUpdate={handlerTaskUpdate}
+            modalVisible={modalVisible}
+            taskSelected={taskSelected}
+            deleteTask={deleteTask}
+          />
 }
+      </SafeAreaView>
+    </>
+  )
+        }
 export default App;
 
 const styles = StyleSheet.create({
@@ -128,41 +153,36 @@ const styles = StyleSheet.create({
   text: {
     padding: 5,
     margin: 5,
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
     alignItems: "center",
-    
+
     color: colors.text,
     fontStyle: "normal",
   },
   texth1: {
-    padding: 10,
-    margin: 10,
-    fontSize: 20,
+    padding: 2,
+    margin: 1,
+    fontSize: 18,
     color: colors.texth1,
     fontWeight: "bold",
     fontStyle: "italic",
-    fontFamily:""
   },
   input: {
     borderBottomWidth: 2,
     margin: 10,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    fontSize: 20,
+    fontSize: 15,
     borderRadius: 5,
     color: colors.input,
   },
   inputContainer: {
     borderWidth: 2,
-    margin:5,
+    margin: 5,
     borderRadius: 5,
-    padding:5,
+    padding: 5,
 
-    backgroundColor: colors.inputcontainer
+    backgroundColor: colors.inputcontainer,
   },
-  
-  
-
-  
 });

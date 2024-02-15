@@ -21,11 +21,12 @@ const styles = StyleSheet.create({
         alignItems:"center",
         borderRadius: 5,
         
+        
 
         
     },
     text:{
-        fontSize:18,
+        fontSize:13,
         color:colors.primary,
     }
 })
