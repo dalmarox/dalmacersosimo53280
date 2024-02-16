@@ -24,7 +24,7 @@ const Home = ({
   modalVisible,
   taskSelected,
   deleteTask,
-  
+
 }) => {
   return (
     <>
@@ -59,7 +59,7 @@ const Home = ({
          deleteTask={deleteTask}
          onHandlerModalDelete={onHandlerModalDelete}
       />
-      
+    
     </>
   )
 }

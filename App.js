@@ -30,7 +30,8 @@ const App = () => {
   const [taskUpdate, setTaskUpdate] = useState({});
   const screenWidth = Dimensions.get("window").width;
   const [fontsLoaded] = useFonts(fontsCollection);
-  const [title,setTitle]=useState("")
+
+  
 
   if (!fontsLoaded) {
     return null;
@@ -51,20 +52,18 @@ const App = () => {
     setTaskAmount("");
     Keyboard.dismiss();
     
-    
   };
   const updateTask = (taskSelected) => {
     setTasks(
       tasks.map(task => {
         if (task.id === taskSelected.id) {
-          return task
+          return taskSelected
         }
-      })
-    )
-    const goBack =() => {
+        return task
+      }))
       setTaskUpdate({})
-    }
   }
+  
   const onHandlerTitle = (t) => {
     setTaskTitle(t);
   }
@@ -86,12 +85,14 @@ const App = () => {
   const handlerTaskUpdate = (task) => {
     setTaskUpdate(task);
   };
-
+ 
   const deleteTask = () => {
     setTasks(tasks.filter((task) => task.id != taskSelected.id));
     setModalVisible(!modalVisible);
   };
-
+  const goBack = () => {
+    setTaskUpdate({})
+}
   const updateTaskCompleted = (id) => {
     setTasks(
       tasks.map((task) => {
@@ -113,7 +114,7 @@ const App = () => {
           <Update 
           taskUpdate={taskUpdate} 
           updateTask={updateTask}
-          goBack={goBack}
+          goBack = {goBack}
           />
         : 
           <Home
@@ -134,6 +135,7 @@ const App = () => {
             modalVisible={modalVisible}
             taskSelected={taskSelected}
             deleteTask={deleteTask}
+            
           />
 }
       </SafeAreaView>
